@@ -142,7 +142,7 @@ function TerminalBlock({ terminal }) {
           className="pt-3 mt-1 border-t border-[var(--border)]"
         >
           <a
-            href="https://github.com"
+            href="https://github.com/ajaySharma2096/PRX-AI-Setup"
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
