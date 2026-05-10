@@ -1,0 +1,222 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   globals.css
+   Load order:  1 of 2  (imported first in main.jsx)
+
+   1. Tailwind directives
+   2. CSS custom properties (design tokens — single source of truth)
+   3. Base element resets + typography scale
+   4. Scrollbar styling
+   5. Selection highlight
+───────────────────────────────────────────────────────────────────────────── */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── 1. Design tokens ──────────────────────────────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --bg:        #030712;
+  --surface:   #0d1117;
+  --surface-2: #111827;
+  --surface-3: #1a2332;
+
+  /* Borders */
+  --border:        rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.13);
+
+  /* Brand — Indigo */
+  --primary:       #6366f1;
+  --primary-dark:  #4f46e5;
+  --primary-glow:  rgba(99, 102, 241, 0.15);
+  --primary-light: #818cf8;
+
+  /* Accent — Cyan */
+  --accent:      #22d3ee;
+  --accent-glow: rgba(34, 211, 238, 0.12);
+
+  /* Semantic */
+  --green:      #10b981;
+  --green-glow: rgba(16, 185, 129, 0.12);
+  --amber:      #f59e0b;
+  --amber-glow: rgba(245, 158, 11, 0.12);
+  --rose:       #f43f5e;
+  --rose-glow:  rgba(244, 63, 94, 0.12);
+  --violet:     #a78bfa;
+
+  /* Text */
+  --text-primary:   #f1f5f9;
+  --text-secondary: #8b9cb3;
+  --text-muted:     #4b5e76;
+
+  /* Layout */
+  --header-h:  72px;
+  --radius:    12px;
+  --radius-sm:  8px;
+}
+
+/* ── 2. Base resets ────────────────────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100dvh;
+  }
+
+  /* Noise texture — decorative, pointer-events off */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Ensure all content sits above the noise layer */
+  #root {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    line-height: 1.15;
+  }
+
+  /* Links */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Code */
+  code, kbd, pre, samp {
+    font-family: 'Courier New', monospace;
+    font-size: 0.875em;
+  }
+
+  /* Inputs */
+  button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font: inherit;
+  }
+
+  /* Images */
+  img, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Focus ring — accessible but premium */
+  :focus-visible {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+/* ── 3. Premium typography scale ──────────────────────────────────────────── */
+@layer components {
+  .text-gradient-primary {
+    background: linear-gradient(135deg, #f1f5f9 0%, var(--primary-light) 50%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-indigo-cyan {
+    background: linear-gradient(135deg, var(--primary-light), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Section wrapper with consistent vertical rhythm */
+  .section-wrapper {
+    padding: 5rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Container — max-width with fluid padding */
+  .container-xl {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Glass surface card */
+  .glass-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .glass-card:hover {
+    border-color: var(--border-strong);
+  }
+
+  /* Inline monospace code fragment */
+  .inline-code {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8em;
+    color: var(--accent);
+    background: rgba(34, 211, 238, 0.07);
+    padding: 0.1em 0.4em;
+    border-radius: 4px;
+  }
+
+  /* Gradient divider */
+  .divider-gradient {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+  }
+}
+
+/* ── 4. Custom scrollbar ───────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.35);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.55);
+}
+
+/* ── 5. Selection ──────────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(99, 102, 241, 0.3);
+  color: var(--text-primary);
+}

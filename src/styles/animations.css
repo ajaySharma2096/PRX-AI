@@ -1,0 +1,132 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   animations.css
+   Load order: 2 of 2  (imported after globals.css in main.jsx)
+
+   Defines all @keyframes used across the site.
+   Tailwind animation utilities reference these by name (tailwind.config.js).
+   Framer Motion variants also map to these timings for consistency.
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Fade up — primary entry animation for cards and sections ── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Fade in — pure opacity, no movement ── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Slide down — mobile nav drawer ── */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Slide up — exit motion ── */
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* ── Shimmer — gradient text + skeleton loading ── */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+/* ── Pulse glow — ambient glow orb behind hero ── */
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+  50%       { opacity: 0.9; transform: translateX(-50%) scale(1.08); }
+}
+
+/* ── Scale in — micro-interaction on hover enter ── */
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Border trace — accent top-bar on cards ── */
+@keyframes borderTrace {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+/* ── Counter — number rolling (JS-controlled, CSS easing only) ── */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Utility animation classes — consumed directly in JSX via className.
+   These mirror the Tailwind animation config in tailwind.config.js but allow
+   more granular control (e.g. custom delays via style prop).
+───────────────────────────────────────────────────────────────────────────── */
+
+.animate-fade-up {
+  animation: fadeUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease both;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.22s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.18s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Shimmer gradient text — use with a gradient background */
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 3.5s linear infinite;
+}
+
+/* Hero glow orb */
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Reduced motion — respect user OS preference.
+   All animations collapse to simple fade-in for accessibility.
+───────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
